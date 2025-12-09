@@ -24,3 +24,4 @@ Things you may want to cover:
 * ...
 # MyQuote-application-prototype
 # MyQuote-application-prototype
+# MyQuote-application-prototype
