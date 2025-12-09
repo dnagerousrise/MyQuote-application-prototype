@@ -1,27 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
+An application prototype with Bootstrap and Ruby on Rails. 
+Made for 
+* search quotes by category
+* make quotes public
+* manage users as an admin
 * ...
 # MyQuote-application-prototype
-# MyQuote-application-prototype
-# MyQuote-application-prototype
+
