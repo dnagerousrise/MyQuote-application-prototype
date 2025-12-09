@@ -1,0 +1,51 @@
+<%# app/views/home/_quote.html.erb %>
+<div class="quote-card mb-4 p-4 border rounded shadow-sm bg-light position-relative">
+
+  <!-- Author and categories -->
+  <div class="mb-2">
+    <h5 class="mb-1 text-primary"><%= "#{quote.user.fname} #{quote.user.lname}" %></h5>
+    <% if quote.categories.any? %>
+      <small class="text-muted">
+        Categories:
+        <%= quote.categories.map(&:name).join(", ") %>
+      </small>
+    <% else %>
+      <small class="text-muted">No categories assigned</small>
+    <% end %>
+  </div>
+
+  <!-- Quote text -->
+  <blockquote class="blockquote mt-3">
+    <p class="mb-0 fs-5 fst-italic text-dark">“<%= quote.quote_text %>”</p>
+  </blockquote>
+
+  <!-- Publish year -->
+  <div class="mt-2 text-muted" style="font-size: 0.9rem;">
+    Published: <%= quote.pub_year.presence || "Unknown" %>
+  </div>
+
+
+  <!-- Comment -->
+  <div class="mt-2 text-muted" style="font-style: oblique; font-size: 0.95rem; color: #555;">
+    <strong class="text-secondary">Comment:</strong>
+    <p class="mb-0"><%= quote.comment.presence || "Unknown" %></p>
+  </div>
+
+
+  <% if quote.philosopher.present? %>
+    <!-- Philosopher name -->
+    <div class="mt-2 text-muted" style="font-size: 0.9rem; font-style: italic;">
+      <%= "#{quote.philosopher.p_fname.presence || 'Unknown'} #{quote.philosopher.p_lname.presence || ''} (#{quote.philosopher.birth_year || 'Unknown'}–#{quote.philosopher.death_year || '~'})" %>
+    </div>
+
+    <!-- Biography section -->
+    <div class="mt-2 text-muted" style="font-size: 0.95rem; color: #444;">
+      <strong class="text-secondary">About <%= "#{quote.philosopher.p_fname.presence || 'Unknown'} #{quote.philosopher.p_lname.presence || ''}" %>:</strong>
+      <p class="mb-0"><%= quote.philosopher.biography.presence || "Unknown" %></p>
+    </div>
+  <% else %>
+    <div class="mt-3 text-muted" style="font-size: 0.95rem;">
+      <strong>Philosopher:</strong> Unknown
+    </div>
+  <% end %>
+</div>

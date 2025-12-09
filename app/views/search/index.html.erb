@@ -1,0 +1,60 @@
+<!--Search page-->
+<h1 class="mb-4">Search Quotes by Category</h1>
+
+<h3 class="mb-4">Search for quotes by category</h3>
+<%= form_tag search_path, method: :get, class: "mb-4" do %>
+  <div class="form-group mb-3">
+    <%= text_field_tag :category_name, params[:category_name], placeholder: 'Enter a category name', class: "form-control" %>
+  </div>
+  <%= submit_tag 'Search Quotes', class: "btn btn-primary" %>
+<% end %>
+<h2 class="mb-4">Related Quotes in "<%= @category&.name || 'Unknown Category' %>"</h2>
+<% if @quotes.any? %>
+  <% @quotes.each do |quote| %>
+  <div class="quote-card mb-4 p-4 border rounded shadow-sm bg-light position-relative">
+
+    <!-- Author and categories -->
+    <div class="mb-2">
+      <h5 class="mb-1 text-primary"><%= "#{quote.user.fname} #{quote.user.lname}" %></h5>
+      <% if quote.categories.any? %>
+        <small class="text-muted">
+          Categories:
+          <%= quote.categories.map(&:name).join(", ") %>
+        </small>
+      <% else %>
+        <small class="text-muted">No categories assigned</small>
+      <% end %>
+    </div>
+
+    <!-- Quote text -->
+    <blockquote class="blockquote mt-3">
+      <p class="mb-0 fs-5 fst-italic text-dark">“<%= quote.quote_text %>”</p>
+    </blockquote>
+
+    <!-- Publish year -->
+    <div class="mt-2 text-muted" style="font-size: 0.9rem;">
+      Published: <%= quote.pub_year.presence || "Unknown" %>
+    </div>
+
+
+    <!-- Comment -->
+    <div class="mt-3" style="font-style: oblique; font-size: 0.95rem; color: #555;">
+      <strong class="text-secondary">Comment:</strong>
+      <p class="mb-0"><%= quote.comment.presence || "Unknown" %></p>
+    </div>
+
+
+    <!-- Philosopher name with birth/death years -->
+    <% if quote.philosopher %>
+      <div class="mt-2 text-muted" style="font-size: 0.9rem; font-style: italic;">
+        <%= "#{quote.philosopher.p_fname} #{quote.philosopher.p_lname} (#{quote.philosopher.birth_year}–#{quote.philosopher.death_year})" %>
+      </div>
+    <% end %>
+    <div class="mt-3">
+      <%= link_to "Read More", quote_path(quote), class: "btn btn-sm btn-outline-secondary" %>
+    </div>
+  </div>
+<% end %>
+<% else %>
+  <p class="text-muted">No public quotes found for this category.</p>
+<% end %>

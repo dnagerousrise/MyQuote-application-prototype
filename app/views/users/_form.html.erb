@@ -1,0 +1,57 @@
+<%= form_with(model: user) do |form| %>
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= form.text_field :fname,
+          placeholder: 'First Name',
+          class: "form-control #{'is-invalid' if user.errors[:fname].any?}" %>
+    <% user.errors[:fname].each do |msg| %>
+      <div class="invalid-feedback d-block"><%= msg %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= form.text_field :lname,
+          placeholder: 'Last Name',
+          class: "form-control #{'is-invalid' if user.errors[:lname].any?}" %>
+    <% user.errors[:lname].each do |msg| %>
+      <div class="invalid-feedback d-block"><%= msg %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= form.text_field :email,
+          placeholder: 'Email Address',
+          class: "form-control #{'is-invalid' if user.errors[:email].any?}" %>
+    <% user.errors[:email].each do |msg| %>
+      <div class="invalid-feedback d-block"><%= msg %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group" style="padding-bottom: 10px;">
+  <%= form.password_field :password,
+        placeholder: 'Choose a strong password',
+        class: "form-control #{'is-invalid' if user.errors[:password].any?}",
+        id: "user_password" %>
+
+    <% user.errors[:password].each do |msg| %>
+      <div class="invalid-feedback d-block"><%= msg %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= form.password_field :password_confirmation,
+          placeholder: 'Confirm your password',
+          class: "form-control #{'is-invalid' if user.errors[:password_confirmation].any?}" %>
+
+    <% user.errors[:password_confirmation].each do |msg| %>
+      <div class="invalid-feedback d-block"><%= msg %></div>
+    <% end %>
+  </div>
+
+  <%= form.hidden_field :is_admin, value: false %>
+  <%= form.hidden_field :status, value: "Active" %>
+
+  <div>
+    <%= form.submit 'Submit', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+

@@ -1,0 +1,12 @@
+<% content_for :title, "Editing quote" %>
+
+<h1>Editing quote</h1>
+<!-- Load _form.html.erb format -->
+<%= render "form", quote: @quote %>
+
+<br>
+
+<div class ="p-3">
+  <%= link_to "Show this quote", @quote, class: "btn btn-sm btn-secondary"%> |
+  <%= link_to "Back to quotes", quotes_path, class: "btn btn-sm btn-secondary"%>
+</div>

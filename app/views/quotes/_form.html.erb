@@ -1,0 +1,130 @@
+<!-- quote from layout -->
+<%= form_with(model: quote, local: true) do |f| %>
+  <!-- Exceptions when quote requirements does not fulfilled-->
+  <% if quote.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(quote.errors.count, "error") %> prohibited this quote from being saved:</h4>
+      <ul>
+        <% quote.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <!-- Quote Text -->
+    <div class="form-group mb-3">
+      <%= f.text_field :quote_text,
+            placeholder: 'Enter the quote',
+            class: "form-control #{'is-invalid' if quote.errors[:quote_text].any?}" %>
+      <% quote.errors[:quote_text].each do |msg| %>
+        <div class="invalid-feedback d-block"><%= msg %></div>
+      <% end %>
+    </div>
+
+    <!-- Publish Year -->
+    <div class="form-group mb-3">
+      <%= f.number_field :pub_year,
+            placeholder: 'Year published',
+            class: "form-control #{'is-invalid' if quote.errors[:pub_year].any?}" %>
+      <% quote.errors[:pub_year].each do |msg| %>
+        <div class="invalid-feedback d-block"><%= msg %></div>
+      <% end %>
+    </div>
+
+    <!-- Comment -->
+    <div class="form-group mb-3">
+      <%= f.text_area :comment,
+            placeholder: 'Add a comment or interpretation',
+            class: "form-control #{'is-invalid' if quote.errors[:comment].any?}" %>
+      <% quote.errors[:comment].each do |msg| %>
+        <div class="invalid-feedback d-block"><%= msg %></div>
+      <% end %>
+    </div>
+
+    <!-- Category Selection -->
+    <div id="categories-container">
+      <% @quote.quote_categories.each do |qc| %>
+        <%= f.fields_for :quote_categories, qc do |qc_fields| %>
+          <div class="category-field row mb-2">
+            <div class="col-auto">
+              <%= qc_fields.label :category_id, "Category", class: "form-label d-inline-block me-2" %>
+              <%= qc_fields.select :category_id, Category.all.collect { |c| [c.name, c.id] }, { include_blank: true }, class: "form-control d-inline-block" %>
+            </div>
+
+            <div class="col-auto align-self-end">
+              <%= qc_fields.hidden_field :_destroy, value: "0", class: "_destroy-field" %>
+              <%= link_to '[-] Remove this category', '#', class: 'remove-category', style: "color: red; text-decoration: none;" %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- Quote Visibility-->
+    <div class="form-check mb-3">
+      <%= f.check_box :is_public, class: "form-check-input" %>
+      <%= f.label :is_public, "Make this quote public", class: "form-check-label" %>
+    </div>
+
+
+    <!-- Philosopher Details -->
+    <h5>Philosopher Details</h5>
+    <%= f.fields_for :philosopher do |philosopher_fields| %>
+      <div class="form-group mb-2">
+        <%= philosopher_fields.label :p_fname, "First Name" %>
+        <%= philosopher_fields.text_field :p_fname, class: "form-control" %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= philosopher_fields.label :p_lname, "Last Name" %>
+        <%= philosopher_fields.text_field :p_lname, class: "form-control" %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= philosopher_fields.label :birth_year, "Birth Year" %>
+        <%= philosopher_fields.number_field :birth_year, class: "form-control" %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= philosopher_fields.label :death_year, "Death Year" %>
+        <%= philosopher_fields.number_field :death_year, class: "form-control" %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= philosopher_fields.label :biography, "Biography" %>
+        <%= philosopher_fields.text_area :biography, class: "form-control" %>
+      </div>
+    <% end %>
+
+
+    <!-- Submit Button -->
+    <div class="pt-3">
+      <!--Button naming change based on quote creation or updating-->
+      <%= f.submit f.object.new_record? ? 'Save Quote' : 'Update Quote', class: 'btn btn-primary' %>
+    </div>
+
+  </div>
+<% end %>
+
+<!--Remove Category JavaScript-->
+<script>
+// Wait for the document to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Attach an event listener to detect clicks on the "Remove this category" link
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('remove-category')) {
+      // Prevent the default action of the link
+      e.preventDefault();
+
+      // Get all the category fields
+      const categoryFields = document.querySelectorAll('.category-field');
+      // Only remove an category field if there's more than one
+      if (categoryFields.length > 1) {
+        e.target.closest('.category-field').remove();
+      }
+    }
+  });
+});
+</script>
+

@@ -1,0 +1,54 @@
+<!--Standard Users quotes-->
+<h1 class="mb-4">My Quotes</h1>
+
+<% if @quotes.any? %>
+  <% @quotes.each do |quote| %>
+    <div class="quote-card mb-4 p-4 border rounded shadow-sm bg-light position-relative">
+
+      <!-- Categories -->
+      <% if quote.categories.any? %>
+        <small class="text-muted">
+          Categories:
+          <%= quote.categories.map(&:name).join(", ") %>
+        </small>
+      <% else %>
+        <small class="text-muted">No categories assigned</small>
+      <% end %>
+
+      <!-- Quote text -->
+      <blockquote class="blockquote mt-3">
+        <p class="mb-0 fs-5 fst-italic text-dark">“<%= quote.quote_text %>”</p>
+      </blockquote>
+
+      <!-- Publish year -->
+      <% if quote.pub_year.present? %>
+        <div class="mt-2 text-muted" style="font-size: 0.9rem;">
+          Published: <%= quote.pub_year %>
+        </div>
+      <% end %>
+
+      <!-- Philosopher with brith year and death year-->
+      <% if quote.philosopher %>
+        <div class="mt-2 text-muted" style="font-size: 0.9rem; font-style: italic;">
+          <%= "#{quote.philosopher.p_fname} #{quote.philosopher.p_lname} (#{quote.philosopher.birth_year}–#{quote.philosopher.death_year})" %>
+        </div>
+      <% end %>
+
+      <!-- Comment -->
+      <% if quote.comment.present? %>
+        <div class="mt-2 text-muted" style="font-style: oblique; font-size: 0.95rem; color: #555;">
+          <strong class="text-secondary">Comment:</strong>
+          <p class="mb-0"><%= quote.comment %></p>
+        </div>
+      <% end %>
+      
+      <!--Learn more about the quote-->
+      <div class="mt-3">
+        <%= link_to "Read More", quote_path(quote), class: "btn btn-sm btn-outline-secondary" %>
+      </div>
+
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-muted">You haven’t added any quotes yet.</p>
+<% end %>

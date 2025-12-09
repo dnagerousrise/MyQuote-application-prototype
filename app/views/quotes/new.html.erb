@@ -1,0 +1,13 @@
+<!--When creating a quote-->
+<% content_for :title, "New quote" %>
+
+<h1>New quote</h1>
+
+<!-- Load the _form.html.erb format -->
+<%= render "form", quote: @quote %>
+
+<br>
+
+<div style = "padding-left: 80px">
+  <%= link_to "Back to quotes", quotes_path, class: "btn btn-sm btn-secondary" %>
+</div>

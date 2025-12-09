@@ -1,0 +1,26 @@
+<!--View all the quotes-->
+
+<% content_for :title, "Quotes" %>
+
+<h1>Quotes</h1>
+
+<div id="quotes">
+<!--Show all quotes in the database-->
+  <% @quotes.each do |quote| %>
+    <%= render quote %>
+      <div class="mt-3">
+        <p>
+          <div>
+            <%= link_to "Show this quote", quote, class: "btn btn-sm btn-secondary"%>
+          </div>
+        </p>  
+      </div>
+  <% end %>
+  <div>
+    <%= link_to "New quote", new_quote_path, class: "btn btn-sm btn-primary" %>
+  </div>
+</div>
+
+
+
+

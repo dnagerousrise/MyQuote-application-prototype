@@ -1,0 +1,28 @@
+<div id="<%= dom_id user %>">
+<p>
+<strong>Fname:</strong>
+<%= user.fname %>
+</p>
+<p>
+<strong>Lname:</strong>
+<%= user.lname %>
+</p>
+<p>
+<strong>Email:</strong>
+<%= user.email %>
+</p>
+<p>
+<strong>Current Password: </strong><span class="text-danger">ENCRYPTED</span>
+<!-- Remove the equal sign from the line below or remove the line completely -->
+<% user.password_digest %>
+</p>
+<p>
+<strong>Is admin:</strong>
+<%= user.is_admin %>
+</p>
+<p>
+  <strong>Status:</strong>
+    <%= user.status.capitalize %>
+</p>
+
+</div>

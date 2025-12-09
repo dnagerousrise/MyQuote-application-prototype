@@ -1,0 +1,51 @@
+<h2>Edit User</h2>
+<% if @user.errors.any? %>
+  <div class="alert alert-danger">
+    <h4>Update failed:</h4>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @user, local: true do |form| %>
+  <!-- Basic fields -->
+  <div class="mb-3">
+    <%= form.label :fname, "First Name" %>
+    <%= form.text_field :fname, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :lname, "Last Name" %>
+    <%= form.text_field :lname, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :email, "Email" %>
+    <%= form.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :password, "Password" %>
+    <%= form.password_field :password, class: "form-control", readonly: (logged_in? && is_administrator?) %>
+  </div>
+
+  <% if is_administrator? %>
+    <!-- Status dropdown -->
+    <div class="mb-3">
+      <%= form.label :status, "Account Status" %>
+      <%= form.select :status, options_for_select(["active", "suspended", "banned"], @user.status), {}, class: "form-select" %>
+    </div>
+
+    <!-- Admin checkbox -->
+    <div class="form-check mb-3">
+      <%= form.check_box :is_admin, class: "form-check-input" %>
+      <%= form.label :is_admin, "Grant Admin Privileges", class: "form-check-label" %>
+    </div>
+  <% end %>
+
+  <%= form.submit "Update User", class: "btn btn-primary" %>
+<% end %>
+

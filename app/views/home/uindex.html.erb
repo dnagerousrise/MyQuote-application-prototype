@@ -1,0 +1,6 @@
+<!--Standard User Landing Page when sign in-->
+<p>Hello <%= session[:fname] %></p>
+<h3>Standard User Landing Page</h3>
+<!--Standard user able to edit their own account-->
+<%= link_to "Edit your account details", edit_user_path(session[:user_id]), class: "btn btn-sm btn-outline-secondary"%>
+

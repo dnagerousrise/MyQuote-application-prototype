@@ -1,0 +1,76 @@
+<!--Navigation bar from bootstrap-->
+<nav class="navbar bg-dark border-bottom border-body navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MYQUOTE</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+        <%= link_to "Home", root_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+        <li><a class="nav-link" href="/search">Search</a></li>
+        </li>
+        <li class="nav-item">
+        <li><a class="nav-link" href="/about">About</a></li>
+        </li>
+        <!--Sign up function visible when user not logged in-->
+        <% if !logged_in? %>
+          <li class="nav-item">
+            <%= link_to 'Sign Up', new_user_path, class:"nav-link" %>
+          </li>
+        <% end %>
+        <!--Sign in function visible when user not logged in-->
+        <% if !logged_in? %>
+          <li class="nav-item">
+            <li><%= link_to 'Sign In', login_path, class:"nav-link" %></li>
+          </li>
+        <% end %>
+        <!--Sign out function visible when signed in-->
+        <% if logged_in? %>
+          <li class="nav-item">
+            <%= button_to "Sign Out", logout_path, method: :delete, class:"btn btn-link nav-link"%>
+          </li>
+        <% end %>
+        <!--Standard User exclusive navigation bar function-->
+        <% if logged_in? && !is_administrator? && current_user.status.downcase == "active"%>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            User
+            </a>
+            <ul class="dropdown-menu">
+              <%= link_to "My Account", userhome_path, class:"dropdown-item" %>
+              <%= link_to "My Quotes", your_quotes_path, class: "dropdown-item" %>
+              <li><hr class="dropdown-divider"></li>
+              <%= link_to "Add New Quote", new_quote_path, class: "dropdown-item" %>
+            </ul>
+          </li>
+        <% end %>
+        <!-Administrator exclusive navigation bar functions--->
+        <% if current_user && is_administrator? && current_user.status.downcase == "active" %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Admin Home", adminhome_path, class:"dropdown-item" %></li>
+              <li><%= link_to 'Manage Users', users_path, class:"dropdown-item" %></li>
+            </ul>
+          </li>
+        <% end %>
+
+        <!--
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+        -->
+      </ul>
+      <!--
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      -->
+    </div>
+  </div>
+</nav>
